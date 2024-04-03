@@ -6,28 +6,41 @@ import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettin
 import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
 import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
 import Header from "../../components/Header";
+import { useEffect, useState } from "react";
+import axios from 'axios';
 
 const Team = () => {
+  const [riders, setRiders] = useState([]);
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+
+  useEffect(() => {
+    axios.get('http://localhost:3001/riders').then((response) => {
+      setRiders(response.data);
+      console.log(riders);
+    }).catch(e => {
+      console.log('error:', e);
+    });
+  });
+
   const columns = [
-    { field: "id", headerName: "ID" },
+    // { field: "id", headerName: "ID" },
     {
-      field: "name",
-      headerName: "Name",
+      field: "firstname",
+      headerName: "First Name",
       flex: 1,
       cellClassName: "name-column--cell",
     },
     {
-      field: "age",
-      headerName: "Age",
-      type: "number",
+      field: "middlename",
+      headerName: "Midde Name",
+      // type: "number",
       headerAlign: "left",
       align: "left",
     },
     {
-      field: "phone",
-      headerName: "Phone Number",
+      field: "lastname",
+      headerName: "Last Name",
       flex: 1,
     },
     {
@@ -36,36 +49,67 @@ const Team = () => {
       flex: 1,
     },
     {
-      field: "accessLevel",
-      headerName: "Access Level",
+      field: "phonenumber",
+      headerName: "Phone Number",
       flex: 1,
-      renderCell: ({ row: { access } }) => {
-        return (
-          <Box
-            width="60%"
-            m="0 auto"
-            p="5px"
-            display="flex"
-            justifyContent="center"
-            backgroundColor={
-              access === "admin"
-                ? colors.greenAccent[600]
-                : access === "manager"
-                ? colors.greenAccent[700]
-                : colors.greenAccent[700]
-            }
-            borderRadius="4px"
-          >
-            {access === "admin" && <AdminPanelSettingsOutlinedIcon />}
-            {access === "manager" && <SecurityOutlinedIcon />}
-            {access === "user" && <LockOpenOutlinedIcon />}
-            <Typography color={colors.grey[100]} sx={{ ml: "5px" }}>
-              {access}
-            </Typography>
-          </Box>
-        );
-      },
     },
+    {
+      field: "otp",
+      headerName: "OTP",
+      flex: 1,
+    },
+    {
+      field: "status",
+      headerName: "Status",
+      flex: 1,
+    },
+    {
+      field: "expotoken",
+      headerName: "Token",
+      flex: 1,
+    },
+    // {
+    //   field: "createdAt",
+    //   headerName: "Created At",
+    //   flex: 1,
+    // },
+    // {
+    //   field: "updatedAt",
+    //   headerName: "Updated At",
+    //   flex: 1,
+    // },
+
+    // {
+    //   field: "accessLevel",
+    //   headerName: "Access Level",
+    //   flex: 1,
+    //   renderCell: ({ row: { access } }) => {
+    //     return (
+    //       <Box
+    //         width="60%"
+    //         m="0 auto"
+    //         p="5px"
+    //         display="flex"
+    //         justifyContent="center"
+    //         backgroundColor={
+    //           access === "admin"
+    //             ? colors.greenAccent[600]
+    //             : access === "manager"
+    //             ? colors.greenAccent[700]
+    //             : colors.greenAccent[700]
+    //         }
+    //         borderRadius="4px"
+    //       >
+    //         {access === "admin" && <AdminPanelSettingsOutlinedIcon />}
+    //         {access === "manager" && <SecurityOutlinedIcon />}
+    //         {access === "user" && <LockOpenOutlinedIcon />}
+    //         <Typography color={colors.grey[100]} sx={{ ml: "5px" }}>
+    //           {access}
+    //         </Typography>
+    //       </Box>
+    //     );
+    //   },
+    // },
   ];
 
   return (
@@ -100,7 +144,7 @@ const Team = () => {
           },
         }}
       >
-        <DataGrid checkboxSelection rows={mockDataTeam} columns={columns} />
+        <DataGrid checkboxSelection rows={riders} columns={columns} />
       </Box>
     </Box>
   );
