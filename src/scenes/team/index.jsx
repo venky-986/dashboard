@@ -15,7 +15,7 @@ const Team = () => {
   const colors = tokens(theme.palette.mode);
 
   useEffect(() => {
-    axios.get('http://172.22.158.77:3000/riders').then((response) => {
+    axios.get('http://localhost:3001/riders').then((response) => {
       setRiders(response.data);
       console.log(riders);
     }).catch(e => {
