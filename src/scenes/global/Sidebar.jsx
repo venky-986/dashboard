@@ -43,6 +43,7 @@ const Sidebar = () => {
 
   return (
     <Box
+    className="sidebar"
       sx={{
         "& .pro-sidebar-inner": {
           background: `${colors.primary[400]} !important`,
