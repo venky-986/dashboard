@@ -1,3 +1,4 @@
+import React from 'react';
 import { Box } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
@@ -37,7 +38,7 @@ const Contacts = () => {
     },
     {
       field: "ENDEREÇO",
-      headerName: "ENDREÇO",
+      headerName: "ENDEREÇO",
       flex: 1,
     },
     {
@@ -94,6 +95,9 @@ const Contacts = () => {
           rows={mockDataContacts}
           columns={columns}
           components={{ Toolbar: GridToolbar }}
+          disableColumnFilter
+          disableColumnSelector
+          disableDensitySelector
         />
       </Box>
     </Box>

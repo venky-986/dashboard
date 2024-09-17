@@ -1,5 +1,5 @@
 import { Box, Typography, useTheme } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import { mockDataTeam } from "../../data/mockData";
 import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
@@ -10,8 +10,9 @@ import Header from "../../components/Header";
 const Team = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+
   const columns = [
-    { field: "id", headerName: "ID" },
+    { field: "id", headerName: "ID", flex: 0.5 },
     {
       field: "Nome",
       headerName: "Nome",
@@ -27,7 +28,7 @@ const Team = () => {
     },
     {
       field: "Telefone",
-      headerName: "Numero de Telefone",
+      headerName: "Número de Telefone",
       flex: 1,
     },
     {
@@ -37,7 +38,7 @@ const Team = () => {
     },
     {
       field: "Nivel de acesso",
-      headerName: "Nivel de acesso",
+      headerName: "Nível de Acesso",
       flex: 1,
       renderCell: ({ row: { access } }) => {
         return (
@@ -46,13 +47,14 @@ const Team = () => {
             m="0 auto"
             p="5px"
             display="flex"
+            alignItems="center"
             justifyContent="center"
             backgroundColor={
               access === "admin"
                 ? colors.greenAccent[600]
                 : access === "manager"
                 ? colors.greenAccent[700]
-                : colors.greenAccent[700]
+                : colors.greenAccent[500]
             }
             borderRadius="4px"
           >
@@ -98,9 +100,19 @@ const Team = () => {
           "& .MuiCheckbox-root": {
             color: `${colors.greenAccent[200]} !important`,
           },
+          "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
+            color: `${colors.grey[100]} !important`,
+          },
         }}
       >
-        <DataGrid checkboxSelection rows={mockDataTeam} columns={columns} />
+        <DataGrid
+          checkboxSelection
+          rows={mockDataTeam}
+          columns={columns}
+          components={{ Toolbar: GridToolbar }}
+          pageSize={10} // Adiciona paginação
+          rowsPerPageOptions={[10, 25, 50]} // Opções de número de linhas por página
+        />
       </Box>
     </Box>
   );
