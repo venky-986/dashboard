@@ -1,3 +1,4 @@
+import React from 'react';
 import { Box } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
@@ -13,36 +14,36 @@ const Contacts = () => {
     { field: "id", headerName: "ID", flex: 0.5 },
     { field: "registrarId", headerName: "Registrar ID" },
     {
-      field: "name",
-      headerName: "Name",
+      field: "NOME",
+      headerName: "NOME",
       flex: 1,
       cellClassName: "name-column--cell",
     },
     {
-      field: "age",
-      headerName: "Age",
+      field: "IDADE",
+      headerName: "IDADE",
       type: "number",
       headerAlign: "left",
       align: "left",
     },
     {
-      field: "phone",
-      headerName: "Phone Number",
+      field: "TELEFONE",
+      headerName: "TELEFONE",
       flex: 1,
     },
     {
-      field: "email",
+      field: "E-MAIL",
       headerName: "Email",
       flex: 1,
     },
     {
-      field: "address",
-      headerName: "Address",
+      field: "ENDEREÇO",
+      headerName: "ENDEREÇO",
       flex: 1,
     },
     {
-      field: "city",
-      headerName: "City",
+      field: "CIDADE",
+      headerName: "CIDADE",
       flex: 1,
     },
     {
@@ -55,8 +56,8 @@ const Contacts = () => {
   return (
     <Box m="20px">
       <Header
-        title="CONTACTS"
-        subtitle="List of Contacts for Future Reference"
+        title="CONTATOS"
+        subtitle="Lista de contatos para referência"
       />
       <Box
         m="40px 0 0 0"
@@ -94,6 +95,9 @@ const Contacts = () => {
           rows={mockDataContacts}
           columns={columns}
           components={{ Toolbar: GridToolbar }}
+          disableColumnFilter
+          disableColumnSelector
+          disableDensitySelector
         />
       </Box>
     </Box>
