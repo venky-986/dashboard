@@ -34,10 +34,10 @@ const Sidebar: React.FC = () => {
     const items: NavigationItem[] = [
         { title: "Início", url: "#", icon: Home },
         { title: "Registros de Produção", url: "#", icon: Calendar },
-        { title: "Histórico", url: "#", icon: History },
-        { title: "Configurações", url: "#", icon: Settings },
-        { title: "Manutenção e Suporte", url: "#", icon: Headset },
         { title: "Economia de Recursos", url: "#", icon: DollarSign },
+        { title: "Histórico", url: "#", icon: History },
+        { title: "Manutenção e Suporte", url: "#", icon: Headset },
+        { title: "Configurações", url: "#", icon: Settings },
     ];
 
     // Close dropdown when clicking outside
