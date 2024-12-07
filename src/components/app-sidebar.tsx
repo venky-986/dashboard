@@ -32,12 +32,12 @@ const Sidebar: React.FC = () => {
     ];
 
     const items: NavigationItem[] = [
-        { title: "Início", url: "#", icon: Home },
-        { title: "Registros de Produção", url: "#", icon: Calendar },
-        { title: "Economia de Recursos", url: "#", icon: DollarSign },
-        { title: "Histórico", url: "#", icon: History },
-        { title: "Manutenção e Suporte", url: "#", icon: Headset },
-        { title: "Configurações", url: "#", icon: Settings },
+        { title: "Início", url: "/app/dashboard", icon: Home },
+        { title: "Registros de Produção", url: "/app/production-record", icon: Calendar },
+        { title: "Economia de Recursos", url: "/app/resource-saving", icon: DollarSign },
+        { title: "Histórico", url: "/app/history", icon: History },
+        { title: "Manutenção e Suporte", url: "/app/maintenance-support", icon: Headset },
+        { title: "Configurações", url: "/app/settings", icon: Settings },
     ];
 
     // Close dropdown when clicking outside
