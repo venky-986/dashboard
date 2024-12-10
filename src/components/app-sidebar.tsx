@@ -1,11 +1,20 @@
 'use client'
 
 import React, { useState, useRef, useEffect } from 'react';
-import {Home, Calendar, History, Settings, Headset, DollarSign, ChevronDown, Menu, X, Plus,} from 'lucide-react';
+import {
+    Home, Calendar, History, Settings, Headset, DollarSign,
+    ChevronDown, Menu, X, Plus, Droplets
+} from 'lucide-react';
 
 interface Area {
     id: number;
     name: string;
+}
+
+interface Microaspersor {
+    id: number;
+    name: string;
+    areaId: number;  // Added to associate microaspersors with areas
 }
 
 interface NavigationItem {
@@ -19,16 +28,27 @@ interface SidebarContentProps {
 }
 
 const Sidebar: React.FC = () => {
-
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [isAreaSelectorOpen, setIsAreaSelectorOpen] = useState<boolean>(false);
-    const [selectedArea, setSelectedArea] = useState<string>("");
-    const dropdownRef = useRef<HTMLDivElement>(null);
+    const [isMicroaspersorSelectorOpen, setIsMicroaspersorSelectorOpen] = useState<boolean>(false);
+    const [selectedArea, setSelectedArea] = useState<Area | null>(null);
+    const [selectedMicroaspersor, setSelectedMicroaspersor] = useState<Microaspersor | null>(null);
+    const areaDropdownRef = useRef<HTMLDivElement>(null);
+    const microaspersorDropdownRef = useRef<HTMLDivElement>(null);
 
+    // Sample data - In a real application, this would come from an API
     const areas: Area[] = [
         { id: 1, name: "Área 1" },
         { id: 2, name: "Área 2" },
         { id: 3, name: "Área 3" },
+    ];
+
+    const microaspersors: Microaspersor[] = [
+        { id: 1, name: "Microaspersor 1", areaId: 1 },
+        { id: 2, name: "Microaspersor 2", areaId: 1 },
+        { id: 3, name: "Microaspersor 3", areaId: 2 },
+        { id: 4, name: "Microaspersor 4", areaId: 2 },
+        { id: 5, name: "Microaspersor 5", areaId: 3 },
     ];
 
     const items: NavigationItem[] = [
@@ -40,11 +60,14 @@ const Sidebar: React.FC = () => {
         { title: "Configurações", url: "/app/settings", icon: Settings },
     ];
 
-    // Close dropdown when clicking outside
+    // Close dropdowns when clicking outside
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
-            if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+            if (areaDropdownRef.current && !areaDropdownRef.current.contains(event.target as Node)) {
                 setIsAreaSelectorOpen(false);
+            }
+            if (microaspersorDropdownRef.current && !microaspersorDropdownRef.current.contains(event.target as Node)) {
+                setIsMicroaspersorSelectorOpen(false);
             }
         };
 
@@ -52,13 +75,18 @@ const Sidebar: React.FC = () => {
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, []);
 
-    const CustomDropdown = () => (
-        <div className="relative" ref={dropdownRef}>
+    // Reset microaspersor selection when area changes
+    useEffect(() => {
+        setSelectedMicroaspersor(null);
+    }, [selectedArea]);
+
+    const AreaDropdown = () => (
+        <div className="relative" ref={areaDropdownRef}>
             <button
                 onClick={() => setIsAreaSelectorOpen(!isAreaSelectorOpen)}
                 className="w-full px-3 py-2 flex items-center justify-between bg-white border border-gray-200 rounded-lg text-sm text-gray-700 hover:bg-gray-50 transition-colors"
             >
-                <span>{selectedArea || "Selecionar área"}</span>
+                <span>{selectedArea?.name || "Selecionar área"}</span>
                 <ChevronDown className={`h-4 w-4 text-gray-500 transition-transform ${isAreaSelectorOpen ? 'transform rotate-180' : ''}`} />
             </button>
 
@@ -68,7 +96,7 @@ const Sidebar: React.FC = () => {
                         <button
                             key={area.id}
                             onClick={() => {
-                                setSelectedArea(area.name);
+                                setSelectedArea(area);
                                 setIsAreaSelectorOpen(false);
                             }}
                             className="w-full px-3 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 transition-colors"
@@ -82,7 +110,8 @@ const Sidebar: React.FC = () => {
                             // Handle new area addition
                             setIsAreaSelectorOpen(false);
                         }}
-                        className="w-full px-3 py-2 text-left text-sm text-green-600 hover:bg-gray-100 transition-colors flex items-center gap-2">
+                        className="w-full px-3 py-2 text-left text-sm text-green-600 hover:bg-gray-100 transition-colors flex items-center gap-2"
+                    >
                         <Plus size={16} />
                         Adicionar nova área
                     </button>
@@ -90,6 +119,62 @@ const Sidebar: React.FC = () => {
             )}
         </div>
     );
+
+    const MicroaspersorDropdown = () => {
+        const filteredMicroaspersors = microaspersors.filter(
+            m => selectedArea && m.areaId === selectedArea.id
+        );
+
+        return (
+            <div className="relative" ref={microaspersorDropdownRef}>
+                <button
+                    onClick={() => setIsMicroaspersorSelectorOpen(!isMicroaspersorSelectorOpen)}
+                    disabled={!selectedArea}
+                    className={`w-full px-3 py-2 flex items-center justify-between bg-white border border-gray-200 rounded-lg text-sm transition-colors ${
+                        selectedArea
+                            ? 'text-gray-700 hover:bg-gray-50'
+                            : 'text-gray-400 bg-gray-50 cursor-not-allowed'
+                    }`}
+                >
+                    <div className="flex items-center gap-2">
+                        <Droplets className="h-4 w-4" />
+                        <span>{selectedMicroaspersor?.name || "Selecionar microaspersor"}</span>
+                    </div>
+                    <ChevronDown className={`h-4 w-4 text-gray-500 transition-transform ${
+                        isMicroaspersorSelectorOpen ? 'transform rotate-180' : ''
+                    }`} />
+                </button>
+
+                {isMicroaspersorSelectorOpen && selectedArea && (
+                    <div className="absolute w-full mt-2 py-1 bg-white border border-gray-200 rounded-lg shadow-lg z-50">
+                        {filteredMicroaspersors.map((microaspersor) => (
+                            <button
+                                key={microaspersor.id}
+                                onClick={() => {
+                                    setSelectedMicroaspersor(microaspersor);
+                                    setIsMicroaspersorSelectorOpen(false);
+                                }}
+                                className="w-full px-3 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 transition-colors"
+                            >
+                                {microaspersor.name}
+                            </button>
+                        ))}
+                        <hr className="my-1 border-gray-200" />
+                        <button
+                            onClick={() => {
+                                // Handle new microaspersor addition
+                                setIsMicroaspersorSelectorOpen(false);
+                            }}
+                            className="w-full px-3 py-2 text-left text-sm text-green-600 hover:bg-gray-100 transition-colors flex items-center gap-2"
+                        >
+                            <Plus size={16} />
+                            Adicionar novo microaspersor
+                        </button>
+                    </div>
+                )}
+            </div>
+        );
+    };
 
     // Mobile sidebar backdrop
     const Backdrop = () => (
@@ -111,9 +196,10 @@ const Sidebar: React.FC = () => {
                 </button>
             </div>
 
-            {/* Area Selector */}
-            <div className="p-4 border-b border-gray-200">
-                <CustomDropdown />
+            {/* Filters Section */}
+            <div className="p-4 border-b border-gray-200 space-y-3">
+                <AreaDropdown />
+                <MicroaspersorDropdown />
             </div>
 
             {/* Navigation Items */}
@@ -171,7 +257,6 @@ const Sidebar: React.FC = () => {
             <div className="hidden lg:block w-64 fixed inset-y-0">
                 <SidebarContent />
             </div>
-
         </>
     );
 };

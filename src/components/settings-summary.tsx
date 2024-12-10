@@ -2,11 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
 interface SettingsSummaryProps {
     settings: {
-        humidity: {
-            colonization: number
-            fruiting: number
-            harvest: number
-        }
+        humidity: number
         irrigationDuration: number
         alertPhoneNumbers: string[]
         preferredSchedule: number[]
@@ -25,12 +21,8 @@ export function SettingsSummary({ settings }: SettingsSummaryProps) {
             </CardHeader>
             <CardContent className="space-y-4">
                 <div>
-                    <h3 className="font-semibold">Níveis de Umidade:</h3>
-                    <ul className="list-disc list-inside">
-                        <li>Colonização: {settings.humidity.colonization}%</li>
-                        <li>Frutificação: {settings.humidity.fruiting}%</li>
-                        <li>Colheita: {settings.humidity.harvest}%</li>
-                    </ul>
+                    <h3 className="font-semibold">Nível de Umidade:</h3>
+                    <p>{settings.humidity}%</p>
                 </div>
                 <div>
                     <h3 className="font-semibold">Tempo de Irrigação:</h3>
@@ -45,7 +37,7 @@ export function SettingsSummary({ settings }: SettingsSummaryProps) {
                     </ul>
                 </div>
                 <div>
-                    <h3 className="font-semibold">Horário Preferencial de Irrigação:</h3>
+                    <h3 className="font-semibold">Horário(s) de Irrigação Escolhidos:</h3>
                     {settings.preferredSchedule.length > 0 ? (
                         <p>
                             {settings.preferredSchedule.map((hour) => formatHour(hour)).join(', ')}

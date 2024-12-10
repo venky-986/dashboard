@@ -143,7 +143,8 @@ export function ProductionRecordForm() {
                                         size="icon"
                                         onClick={() => setQuality(value)}
                                     >
-                                        <Mushroom className={cn("h-4 w-4", quality >= value ? "text-yellow-500" : "text-gray-300")} />
+                                        {/*<Mushroom className={cn("h-4 w-4", quality >= value ? "text-yellow-500" : "text-gray-300")} />*/}
+                                        { value === 1 ? "C" : value === 2 ? "B" : "A" }
                                     </Button>
                                 ))}
                             </div>

@@ -5,55 +5,47 @@ import { InfoIcon as InfoCircle } from 'lucide-react'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 
 interface HumiditySettingsProps {
-    humidity: {
-        colonization: number
-        fruiting: number
-        harvest: number
-    }
-    onUpdate: (humidity: HumiditySettingsProps['humidity']) => void
+    humidity: number
+    onUpdate: (humidity: number) => void
 }
 
 export function HumiditySettings({ humidity, onUpdate }: HumiditySettingsProps) {
-    const handleUpdate = (phase: keyof typeof humidity) => (value: number[]) => {
-        onUpdate({ ...humidity, [phase]: value[0] })
+    const handleUpdate = (value: number[]) => {
+        onUpdate(value[0])
     }
 
     return (
         <Card>
             <CardHeader>
                 <CardTitle className="flex items-center justify-between">
-                    Níveis de Umidade
+                    Nível de Umidade
                     <TooltipProvider>
                         <Tooltip>
                             <TooltipTrigger>
                                 <InfoCircle className="h-5 w-5 text-muted-foreground" />
                             </TooltipTrigger>
                             <TooltipContent>
-                                <p>Ajuste os níveis de umidade para cada fase do cultivo.</p>
+                                <p>Ajuste o nível de umidade desejado para o cultivo.</p>
                             </TooltipContent>
                         </Tooltip>
                     </TooltipProvider>
                 </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
-                {Object.entries(humidity).map(([phase, value]) => (
-                    <div key={phase} className="space-y-2">
-                        <Label htmlFor={phase} className="capitalize">
-                            {phase === 'colonization' ? 'Colonização' : phase === 'fruiting' ? 'Frutificação' : 'Colheita'}
-                        </Label>
-                        <div className="flex items-center space-x-4">
-                            <Slider
-                                id={phase}
-                                min={60}
-                                max={100}
-                                step={1}
-                                value={[value]}
-                                onValueChange={handleUpdate(phase as keyof typeof humidity)}
-                            />
-                            <span className="w-12 text-right">{value}%</span>
-                        </div>
+                <div className="space-y-2">
+                    <Label htmlFor="humidity">Umidade Desejada</Label>
+                    <div className="flex items-center space-x-4">
+                        <Slider
+                            id="humidity"
+                            min={60}
+                            max={100}
+                            step={1}
+                            value={[humidity]}
+                            onValueChange={handleUpdate}
+                        />
+                        <span className="w-12 text-right">{humidity}%</span>
                     </div>
-                ))}
+                </div>
             </CardContent>
         </Card>
     )

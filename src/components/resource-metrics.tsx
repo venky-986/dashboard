@@ -1,5 +1,11 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Droplet, TrendingDown, Gauge } from 'lucide-react'
+import { Droplet, TrendingDown, Gauge, Info } from 'lucide-react'
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from "@/components/ui/tooltip"
 
 export function ResourceMetrics() {
     return (
@@ -16,7 +22,19 @@ export function ResourceMetrics() {
             </Card>
             <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium">Economia Mensal</CardTitle>
+                    <div className="flex items-center gap-2">
+                        <CardTitle className="text-sm font-medium">Economia Mensal</CardTitle>
+                        <TooltipProvider>
+                            <Tooltip>
+                                <TooltipTrigger>
+                                    <Info className="h-4 w-4 text-gray-400 hover:text-gray-600 transition-colors" />
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                    <p className="text-sm">Essa métrica é calculada considerando sua economia com funcionários e água</p>
+                                </TooltipContent>
+                            </Tooltip>
+                        </TooltipProvider>
+                    </div>
                     <TrendingDown className="h-4 w-4 text-green-500" />
                 </CardHeader>
                 <CardContent>
@@ -37,4 +55,3 @@ export function ResourceMetrics() {
         </div>
     )
 }
-

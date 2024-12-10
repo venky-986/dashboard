@@ -4,7 +4,7 @@ import { AlertCircle } from 'lucide-react'
 export function AlertsList() {
     // In a real application, these alerts would come from your backend
     const alerts = [
-        { id: 1, message: "Umidade baixa na Área 2", timestamp: "2023-07-10 14:30" },
+        { id: 1, message: "Umidade baixa na Área 2 - Microaspersor 290", timestamp: "2023-07-10 14:30" },
         { id: 2, message: "Manutenção preventiva necessária", timestamp: "2023-07-09 09:15" },
     ]
 

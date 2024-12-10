@@ -2,10 +2,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 
 const irrigationEvents = [
-    { date: '07/07/2023', time: '08:30', duration: '15 min', area: 'Área 1', type: 'Automático' },
-    { date: '05/07/2023', time: '14:45', duration: '20 min', area: 'Área 2', type: 'Manual' },
-    { date: '03/07/2023', time: '10:15', duration: '15 min', area: 'Área 1', type: 'Automático' },
-    { date: '01/07/2023', time: '16:00', duration: '25 min', area: 'Área 3', type: 'Manual' },
+    { date: '07/07/2023', time: '08:30', duration: '15 min', area: 'Área 1 - Microaspersor 2', type: 'Automático' },
+    { date: '05/07/2023', time: '14:45', duration: '20 min', area: 'Área 2 - Microaspersor 32', type: 'Manual' },
+    { date: '03/07/2023', time: '10:15', duration: '15 min', area: 'Área 1 - Microaspersor 332', type: 'Automático' },
+    { date: '01/07/2023', time: '16:00', duration: '25 min', area: 'Área 3 - Microaspersor 12', type: 'Manual' },
 ]
 
 export function IrrigationLog() {
