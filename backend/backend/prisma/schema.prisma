@@ -48,10 +48,10 @@ model area_cultivo {
   nome                   String
   criado_em              DateTime           @default(now())
   ativo                  Boolean
-  umidade_min            Float
-  umidade_max            Float
-  tempo_irrigacao_padrao Int
-  horarios_permitidos    Json
+  umidade_min            Float?
+  umidade_max            Float?
+  tempo_irrigacao_padrao Int?
+  horarios_permitidos    Json?
   saco_cultivo           saco_cultivo[]
   leitura_sensor         leitura_sensor[]
   lote                   lote[]
@@ -130,13 +130,13 @@ model registro_producao {
 }
 
 model alerta {
-  id                       Int                    @id @default(autoincrement())
-  area_cultivo             area_cultivo           @relation(fields: [area_cultivo_id], references: [id])
+  id                       Int                   @id @default(autoincrement())
+  area_cultivo             area_cultivo          @relation(fields: [area_cultivo_id], references: [id])
   area_cultivo_id          Int
-  unidade_monitoramento    unidade_monitoramento? @relation(fields: [unidade_monitoramento_id], references: [id])
-  unidade_monitoramento_id Int?
+  unidade_monitoramento    unidade_monitoramento @relation(fields: [unidade_monitoramento_id], references: [id])
+  unidade_monitoramento_id Int
   tipo                     String
   mensagem                 String
-  timestamp                DateTime               @default(now())
+  timestamp                DateTime              @default(now())
   status                   StatusAlerta // "Resolvido/Monitorando"
 }
